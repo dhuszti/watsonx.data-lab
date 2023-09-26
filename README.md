@@ -11,4 +11,22 @@ i.	select car, avg(mpg) as avg_mpg from iceberg_data.my_schema.cars group by car
 d.	Query history
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c3ededfc-6fb2-4e52-a248-17e050940968)
 
-4. 
+4. Federation - Copy this 
+SELECT
+  EMP_DIM.employee_name,
+  MAX(EMP_FACT.expense_total) as max_expense
+FROM
+  "db2_catalog"."gosalesdw"."emp_employee_dim" as EMP_DIM
+  JOIN "hive_data"."gosalesdw"."emp_expense_fact" as EMP_FACT ON EMP_DIM."employee_key" = EMP_FACT."employee_key"
+GROUP BY EMP_DIM.employee_name
+ORDER BY max_expense DESC
+
+5. Move data from external Db2 database to Iceberg table
+<sub>create table iceberg_data.wxgosalesdw.emp_employee_dim as
+select
+  *
+from
+  db2_catalog.gosalesdw.emp_employee_dim;
+</sub>
+
+   
