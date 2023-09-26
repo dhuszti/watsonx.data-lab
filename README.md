@@ -106,3 +106,35 @@ select count(*) from iceberg_data.my_schema.airport_id;
 -- rollback_to_snapshot
 call iceberg_data.system.rollback_to_snapshot ('**my_schema**', 'airport_id', <snapshotID>);
 ```   
+##  Optimize performance - use partitioning
+
+create table iceberg_data.my_schema.customer as select * from tpch.tiny.customer;
+
+-- Run a simple scan query which selects customer names and market segment.
+select name, mktsegment from iceberg_data.workshop.customer limit 3;
+
+-- Run this EXPLAIN or show via Explain button
+explain select name, mktsegment from iceberg_data.workshop.customer;
+
+-- Create partitioned table (afterwards show the MinIO)
+create table iceberg_data.workshop.part_customer 
+  with (partitioning = array['mktsegment']) 
+  as select * from tpch.tiny.customer;
+
+select * from iceberg_data."workshop".part_customer where mktsegment='MACHINERY';
+
+create table iceberg_data.workshop.orders as 
+  select * from tpch.tiny.orders;
+
+-- Use a Windowing function  
+SELECT 
+   orderkey, clerk, totalprice, 
+   rank() OVER (PARTITION BY clerk ORDER BY totalprice DESC) AS rnk 
+FROM 
+   iceberg_data.workshop.orders 
+ORDER BY 
+   clerk, rnk;  
+   
+select * from iceberg_data.workshop.customer where mktsegment='FURNITURE';
+
+select * from iceberg_data.workshop.part_customer where mktsegment='FURNITURE';
