@@ -11,20 +11,24 @@ c.	SQL (explain and run):
 d.	Query history
 
 4. Federation - Copy this 
-```SELECT
+```
+SELECT
   EMP_DIM.employee_name,
   MAX(EMP_FACT.expense_total) as max_expense
 FROM
   "db2_catalog"."gosalesdw"."emp_employee_dim" as EMP_DIM
   JOIN "hive_data"."gosalesdw"."emp_expense_fact" as EMP_FACT ON EMP_DIM."employee_key" = EMP_FACT."employee_key"
 GROUP BY EMP_DIM.employee_name
-ORDER BY max_expense DESC```
+ORDER BY max_expense DESC
+```
 
 5. Move data from external Db2 database to Iceberg table
-```create table iceberg_data.wxgosalesdw.emp_employee_dim as
+```
+create table iceberg_data.wxgosalesdw.emp_employee_dim as
 select
   *
 from
-  db2_catalog.gosalesdw.emp_employee_dim;```
+  db2_catalog.gosalesdw.emp_employee_dim;
+```
 
    
