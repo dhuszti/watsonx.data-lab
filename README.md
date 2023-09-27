@@ -117,8 +117,11 @@ select car, avg(mpg) as avg_mpg from iceberg_data.**my_schema**.cars group by ca
 
 ## Federation
 Unlike traditional database systems, Presto doesn’t have its own native database storage. Instead, Presto supports separation of compute and storage, with dozens of connectors that let Presto access data where it lives – which could be in relational databases, NoSQL databases, data warehouses, data lakes, data lakehouses, and more.
+
 With Presto’s federated query capability (frequently referred to as data federation, or simply federation), enterprises can combine data from their existing, diverse sources with new data that they have in watsonx.data, rapidly unlocking insights without the complexity and cost of duplicating or moving data.
+
 Although Presto supports a wide range of connectors, watsonx.data officially only supports a subset of them. This is because IBM wants to ensure quality, performance, and security of connectors before adding support (which may require updating connector source code to do this). More connectors will be added over time.
+
 As of 3Q 2023, Presto in watsonx.data can currently connect to IBM Db2, Netezza, Apache Kafka, MySQL, PostgreSQL, and MongoDB, among others. The most current list of connectors and the types SQL statements supported can be found here. The list of supported connectors will grow over time.
 In this section you will combine data from watsonx.data’s object storage with data in Db2 and PostgreSQL databases. To avoid you having to provision these databases yourself, they’ve been installed in the same VM as watsonx.data and are pre-populated with data.
 
@@ -126,10 +129,10 @@ In this section you will combine data from watsonx.data’s object storage with 
 
 To make this tutorial faster there is an already configured Db2 (running in IBM Cloud) added to Presto as federated database.
 
-Select the Query workspace () icon from the left-side menu. The Query workspace page opens with a data objects navigation pane on the left side and a SQL editor (workspace) pane on the right side.
+1. Select the Query workspace () icon from the left-side menu. The Query workspace page opens with a data objects navigation pane on the left side and a SQL editor (workspace) pane on the right side.
 
-### Write a query to get max expense for each employee (Db2 - fact table & Watsonx.data Hive table - dim table)
-1. Copy the below SQL to SQL editor and run it
+2. Write a query to get max expense for each employee (Db2 - fact table & Watsonx.data Hive table - dim table)
+3. Copy the below SQL to SQL editor and run it
 ```
 SELECT
   EMP_DIM.employee_name,
@@ -141,8 +144,8 @@ GROUP BY EMP_DIM.employee_name
 ORDER BY max_expense DESC
 ```
 
-### This sample query could be used by the fictional business to determine which purchasing method is associated with the largest orders. (Db2 & Watsonx.data Hive table).
-1. Copy the below SQL to SQL editor and run it
+4. This below sample query could be used by the fictional business to determine which purchasing method is associated with the largest orders. (Db2 & Watsonx.data Hive table).
+5. Copy the below SQL to SQL editor and run it
 ```
 select
   pll.product_line_en as product,
@@ -191,32 +194,65 @@ from
 ```
 2. Run query
 
-##  Timetravel query
-1. If not yet created then please create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
-2. Copy the below SQL to SQL editor and replace "my_schema" to your schema like "dhuszti"
-
+3. Check whether data is correctly migrated to Watsonx.data from Db2. Run below SQL statement.
 ```
--- create a sample table to show time travel
+select * from iceberg_data.**my_schema**.emp_employee_dim;
+```
+
+##  Timetravel query and rollback
+
+The Iceberg open table format provides a number of benefits to users, including the ability to see a table as it existed at a point in the past. This time travel capability is useful in a number of different ways. For example, having the ability to query historical data is useful for auditing purposes. Or if an application corrupts table data in some way, you can imagine the value in being able to quickly reverse those changes by resetting the table to a known good state.
+
+Iceberg uses snapshots to support this time travel capability. A snapshot represents the state of a table at some point in time. When data is modified in a table, such as inserting, updating, or deleting records, a new snapshot is created. There are maintenance operations that can be used to clean up older snapshots that are no longer needed.
+
+1. If not yet created then please create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
+2. Create a sample table to test time travel query and rollback. Copy the below SQL to SQL editor and replace "my_schema" to your schema like "dhuszti"
+```
 create table iceberg_data.**my_schema**.airport_id as select * from hive_data.ontime.airport_id;
 ```
+As shown in the output above after running the query, there are 6,250 rows in this table.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e6b3a2e1-d33b-4d8f-b7b0-e7356e3d22f2)
 
+3. Navigate to the iceberg_data > **my_schema** > airport_id table (if you don’t see the table, refresh the schema). Then, select the Time travel tab.
+
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/8980d0a1-0e02-4429-8077-a0606c05493e)
+
+4. Copy and paste the following SQL statements to insert data, check whether data is inserted and validate you have 6251 rows.
 ```
--- get snapshot id
-select * from iceberg_data.**my_schema**."airport_id$snapshots" order by committed_at;
+insert into iceberg_data.**my_schema**.airport_id values (10000, 'North Pole: Reindeer Field');
 ```
 ```
-insert into iceberg_data.my_schema.airport_id values (10000, 'North Pole: Reindeer Field');
-```
-```
-select * from iceberg_data.my_schema.airport_id where code = 10000;
+select * from iceberg_data.**my_schema**.airport_id where code = 10000;
 ```
 ```
 select count(*) from iceberg_data.my_schema.airport_id;
 ```
+5. Select the Data manager () icon again from the left-side menu.
+6. As before, navigate to the iceberg_data > **my_schema** > airport_id table. Then, select the Time travel tab.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/7a22b358-9864-4711-a0e9-e0a1c7a9f88d)
+
+Note how are there are now two snapshots shown. If you do not see a second snapshot then refresh your browser (for instance, using <F5> in the Firefox browser) and repeat this step.
+The second snapshot shows that there are 6,251 total rows, with 1 row having been added in this new version of the table.
+
+You are now going to roll the table back to the first snapshot, representing the initial state of the table. This version of the table did not have the row you added.
+
+7. Click the overflow menu icon (vertical ellipses) at the end of the row for the original snapshot (the first snapshot shown, with the earlier Committed at timestamp and 6250 Added records). Click Rollback.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/654f70fd-8456-4854-8248-61be40bd7cd5)
+
+8. In the Confirm rollback pop-up window, click Rollback.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e1fdce27-00b9-4795-81e3-41100b28ea9c)
+
+Note: For reference, the following SQL statement will perform the equivalent roll back operation (DO NOT RUN THIS NOW):
+```call iceberg_data.system.rollback_to_snapshot ('my_schema', 'airport_id', <snapshotID>);```
+
+9. Copy and paste the following SQL statement
 ```
--- rollback_to_snapshot
-call iceberg_data.system.rollback_to_snapshot ('**my_schema**', 'airport_id', <snapshotID>);
-```   
+select * from iceberg_data.**my_schema**.airport_id where code = 10000;
+```
+```
+select count(*) from iceberg_data.my_schema.airport_id;
+```
+
 ##  Optimize performance - use partitioning
 
 create table iceberg_data.my_schema.customer as select * from tpch.tiny.customer;
