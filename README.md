@@ -57,10 +57,15 @@ In the Create schema pop-up window, select/enter the following information, and 
 * Name: **my_schema**
   
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)
+
 Expand the iceberg_data catalog. The new schema should be listed (but contains no tables).
+
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d)
+
 Click the Create dropdown menu again but this time select Create table from file.
+
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/a6d491ee-ccb1-4614-9558-d653befd9f52)
+
 The Create table from file workflow allows you to upload a small (maximum 2 MB file size) .csv, .parquet, .json, or .txt file to define and populate a new table.
 
 Download the sample cars.csv file to your desktop (link to file: https://ibm.box.com/v/data-cars-csv).
