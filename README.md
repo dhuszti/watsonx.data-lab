@@ -55,15 +55,21 @@ a.	Go to the top of the left navigation pane and click the Create dropdown menu.
 In the Create schema pop-up window, select/enter the following information, and then click the Create button.
 * Catalog: iceberg_data
 * Name: **my_schema**
-  
+<p align="center">
+  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)">
+</p>
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)
 
 Expand the iceberg_data catalog. The new schema should be listed (but contains no tables).
-
+<p align="center">
+  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d)">
+</p>
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d)
 
 Click the Create dropdown menu again but this time select Create table from file.
-
+<p align="center">
+  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/a6d491ee-ccb1-4614-9558-d653befd9f52)">
+</p>
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/a6d491ee-ccb1-4614-9558-d653befd9f52)
 
 The Create table from file workflow allows you to upload a small (maximum 2 MB file size) .csv, .parquet, .json, or .txt file to define and populate a new table.
@@ -71,9 +77,18 @@ The Create table from file workflow allows you to upload a small (maximum 2 MB f
 Download the sample cars.csv file to your desktop (link to file: https://ibm.box.com/v/data-cars-csv).
 
 For the Source, click Drag and drop a file or click to upload. Locate the cars.csv file you downloaded in the previous step and select it for upload (or simply drag and drop the file into this panel).
+<p align="center">
+  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/514d5117-c5da-453c-bb61-b1a8c86ea10f)">
+</p>
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/514d5117-c5da-453c-bb61-b1a8c86ea10f)
+
 Scroll down to view a sample of the data uploaded. The schema of the table is inferred from the data in the file. Click Next.
+
+<p align="center">
+  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/074ef713-e018-4c5a-8918-ca7fb46a7625)">
+</p>
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/074ef713-e018-4c5a-8918-ca7fb46a7625)
+
 For the Target, select/enter the following information (some fields are pre-populated and cannot be changed). Once filled in, click Next.
 * Engine: presto-01
 * Catalog: iceberg_data
