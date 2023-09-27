@@ -18,10 +18,10 @@ team 5:
 Each bucket is associated with a catalog (with a 1:1 mapping). When a bucket is added to watsonx.data, a catalog is created for it at the same time, based on input from the user. Likewise, if a database connection is added (for federation purposes), a catalog is created for that database connection as well. Both of these activities will be shown later in the lab. Each catalog is then associated with one or more engines. An engine can’t access data in a bucket or a remote database unless the corresponding catalog is associated with the engine.
 
 4. Let us add a new bucket by clicking to top right corner
-   ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/6fde9e54-aad1-401a-a6b7-9f81dd6f2a18)
-5. Click on bucket
-   ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)
-6. Fill values accordingly:
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/6fde9e54-aad1-401a-a6b7-9f81dd6f2a18)
+6. Click on bucket
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)
+7. Fill values accordingly:
 Bucketname: cos-watsonx-data-user1 or cos-watsonx-data-user2 or cos-watsonx-data-user3 or cos-watsonx-data-user4 or cos-watsonx-data-user5 or cos-watsonx-data-user6 (please select the one respective to your previosly selected username)
 Url: https://s3.eu-de.cloud-object-storage.appdomain.cloud
 Access key: 7830f4f34e514848ad3141e196ce4e79
@@ -40,14 +40,49 @@ Active: Maybe later
 
 ## Upload file via GUI
 Upload a file and check how it is stored in Iceberg table format
-1. Upload data via GUI - cars.csv
-a.	Create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
-b.	Create new „cars” table under this „my_schema”
-c.	SQL (explain and run) - substitute "my_schema" with your name like "dhuszti": 
+a.	Go to the top of the left navigation pane and click the Create dropdown menu. Select Create schema. Create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/bfa1611f-b862-4ceb-a867-bb94f44b7e8d)
+In the Create schema pop-up window, select/enter the following information, and then click the Create button.
+• Catalog: iceberg_data
+• Name: **my_schema**
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)
+Expand the iceberg_data catalog. The new schema should be listed (but contains no tables).
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d)
+Click the Create dropdown menu again but this time select Create table from file.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/a6d491ee-ccb1-4614-9558-d653befd9f52)
+The Create table from file workflow allows you to upload a small (maximum 2 MB file size) .csv, .parquet, .json, or .txt file to define and populate a new table.
+
+Download the sample cars.csv file to your desktop (link to file: https://ibm.box.com/v/data-cars-csv).
+
+For the Source, click Drag and drop a file or click to upload. Locate the cars.csv file you downloaded in the previous step and select it for upload (or simply drag and drop the file into this panel).
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/514d5117-c5da-453c-bb61-b1a8c86ea10f)
+Scroll down to view a sample of the data uploaded. The schema of the table is inferred from the data in the file. Click Next.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/074ef713-e018-4c5a-8918-ca7fb46a7625)
+For the Target, select/enter the following information (some fields are pre-populated and cannot be changed). Once filled in, click Next.
+• Engine: presto-01
+• Catalog: iceberg_data
+• Schema: my_schema
+• Table name: cars
+• Table format: Apache Iceberg
+• Data format: Parquet
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/7c9607fa-f2de-4da6-ab1d-ac24d35c1c80)
+Scroll down to review the Summary, which includes the Data Definition Language (DDL) that will be used to create the table. You have an opportunity to alter the DDL statement if you wish, but do not change anything for this lab. Click Create to create the table.
+
+Navigate to your new table: iceberg_data > my_schema > cars.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/09a040c1-a2d5-4eed-9ab6-a19d2e86cb0b)
+
+###Query Workspace Page
+Databases and query engines such as Presto have multiple ways that users can interact with the data. For example, there is usually an interactive command line interface (CLI) that lets users run SQL statements from a command terminal. Also, remote applications can use JDBC (Java Database Connectivity) to connect to the data store and run SQL statements.
+The watsonx.data user interface includes an SQL interface for building and running SQL statements. This is called the Query workspace. Users can write or copy in their own SQL statements, or they can use templates to assist in building new SQL statements.
+
+Select the Query workspace () icon from the left-side menu. The Query workspace page opens with a data objects navigation pane on the left side and a SQL editor (workspace) pane on the right side.
+Like in the Data manager page, the top of the navigation pane directs you to select an engine to use. It is this engine that will be used to run the SQL statements entered here. The only engine that exists in this lab environment is the presto-01 Presto engine, which is selected by default.
+![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/b3af7044-e58a-4944-95ea-f8de52f2a052)
+
+Copy and paste below SQL (replace my_schema to your own schema) 
 ```
 select car, avg(mpg) as avg_mpg from iceberg_data.**my_schema**.cars group by car order by car;
 ```
-d.	Query history
 
 ## Federation
 Unlike traditional database systems, Presto doesn’t have its own native database storage. Instead, Presto supports separation of compute and storage, with dozens of connectors that let Presto access data where it lives – which could be in relational databases, NoSQL databases, data warehouses, data lakes, data lakehouses, and more.
