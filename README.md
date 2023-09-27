@@ -80,7 +80,6 @@ For the Source, click Drag and drop a file or click to upload. Locate the cars.c
 <p align="center">
   <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/514d5117-c5da-453c-bb61-b1a8c86ea10f)">
 </p>
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/514d5117-c5da-453c-bb61-b1a8c86ea10f)
 
 Scroll down to view a sample of the data uploaded. The schema of the table is inferred from the data in the file. Click Next.
 
