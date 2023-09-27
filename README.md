@@ -241,7 +241,7 @@ You are now going to roll the table back to the first snapshot, representing the
 
 8. In the Confirm rollback pop-up window, click Rollback.
 <p align="center">
-  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e1fdce27-00b9-4795-81e3-41100b28ea9c)">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e1fdce27-00b9-4795-81e3-41100b28ea9c">
 </p>
 
 Note: For reference, the following SQL statement will perform the equivalent roll back operation (DO NOT RUN THIS NOW):
