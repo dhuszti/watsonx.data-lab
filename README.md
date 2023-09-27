@@ -27,14 +27,13 @@ Each bucket is associated with a catalog (with a 1:1 mapping). When a bucket is 
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)
 
 8. Fill values accordingly:
-Bucketname: cos-watsonx-data-user1 or cos-watsonx-data-user2 or cos-watsonx-data-user3 or cos-watsonx-data-user4 or cos-watsonx-data-user5 or cos-watsonx-data-user6 (please select the one respective to your previosly selected username)
-
+• Bucketname: cos-watsonx-data-user1 or cos-watsonx-data-user2 or cos-watsonx-data-user3 or cos-watsonx-data-user4 or cos-watsonx-data-user5 or cos-watsonx-data-user6 (please select the one respective to your previosly selected username)
 • Url: https://s3.eu-de.cloud-object-storage.appdomain.cloud
-b) Access key: 7830f4f34e514848ad3141e196ce4e79
-c) Secret key: 6984cfb2ac8164dd1f290f32e525986b35776ff67566c9de
-d) Catalog type: Apache Iceberg
-e) Catalog name: iceberg_**your_name** (for instance iceberg_dhuszti)
-f) Active: Maybe later
+• Access key: 7830f4f34e514848ad3141e196ce4e79
+• Secret key: 6984cfb2ac8164dd1f290f32e525986b35776ff67566c9de
+• Catalog type: Apache Iceberg
+• Catalog name: iceberg_**your_name** (for instance iceberg_dhuszti)
+• Active: Maybe later
   
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/26733521-6a42-4d7b-8333-1e6407510a46)
 
@@ -71,11 +70,13 @@ Scroll down to view a sample of the data uploaded. The schema of the table is in
 For the Target, select/enter the following information (some fields are pre-populated and cannot be changed). Once filled in, click Next.
 • Engine: presto-01
 • Catalog: iceberg_data
-• Schema: my_schema
+• Schema: **my_schema**
 • Table name: cars
 • Table format: Apache Iceberg
 • Data format: Parquet
+
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/7c9607fa-f2de-4da6-ab1d-ac24d35c1c80)
+
 Scroll down to review the Summary, which includes the Data Definition Language (DDL) that will be used to create the table. You have an opportunity to alter the DDL statement if you wish, but do not change anything for this lab. Click Create to create the table.
 
 Navigate to your new table: iceberg_data > my_schema > cars.
@@ -89,7 +90,7 @@ Select the Query workspace () icon from the left-side menu. The Query workspace 
 Like in the Data manager page, the top of the navigation pane directs you to select an engine to use. It is this engine that will be used to run the SQL statements entered here. The only engine that exists in this lab environment is the presto-01 Presto engine, which is selected by default.
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/b3af7044-e58a-4944-95ea-f8de52f2a052)
 
-Copy and paste below SQL (replace my_schema to your own schema) 
+Copy and paste below SQL (replace my_schema to your own schema) and run it
 ```
 select car, avg(mpg) as avg_mpg from iceberg_data.**my_schema**.cars group by car order by car;
 ```
@@ -102,6 +103,10 @@ As of 3Q 2023, Presto in watsonx.data can currently connect to IBM Db2, Netezza,
 In this section you will combine data from watsonx.data’s object storage with data in Db2 and PostgreSQL databases. To avoid you having to provision these databases yourself, they’ve been installed in the same VM as watsonx.data and are pre-populated with data.
 
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/39bcb637-d7bb-4f18-91d3-ef21c0116925)
+
+To make this tutorial faster there is an already configured Db2 (running in IBM Cloud) added to Presto as federated database.
+
+Select the Query workspace () icon from the left-side menu. The Query workspace page opens with a data objects navigation pane on the left side and a SQL editor (workspace) pane on the right side.
 
 ### Write a query to get max expense for each employee (Db2 - fact table & Watsonx.data Hive table - dim table)
 1. Copy the below SQL to SQL editor and run it
@@ -142,9 +147,20 @@ order by
   order_method;
 ```
    
-##  Move data from external Db2 database to Iceberg table
-1. If not yet created then please create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
-2. Copy the below SQL to SQL editor and replace "my_schema" to your schema like "dhuszti"
+##  Offloading Data from a Data Warehouse
+The previous section described the federated query capability of watsonx.data and Presto. In addition to it making it easy to access data across the enterprise, federation also opens the door to significant cost-savings for clients.
+
+Many enterprises maintain expensive data warehouses, whether they are on-premises or in the cloud. These warehouses support mission-critical workloads with low-latency and high-performance requirements that justify their high costs. However, there is also often data in these warehouses that are supporting less important or less stringent workloads. This could be infrequently accessed (cold) data being kept for audit purposes, or data used for business intelligence, reporting, and data science. It makes financial sense for this data to be offloaded to a lower-cost solution, but keeping it in the warehouse has just been the easier path to take. The result, though, is periodic scaling of the data warehouse to support growing workloads, which can be very expensive.
+
+With watsonx.data, enterprises can offload data that really doesn’t need to be in the warehouse to lower-cost object storage. With fit-for-purpose engines, data warehousing costs can be reduced by offloading workloads from a data warehouse to watsonx.data. Specifically, applications that need to access this data can query it through Presto (or Spark). This includes being able to combine the offloaded data with the data that remains in the warehouse. This section will show an example of how this can be done with Db2 (but the steps are equivalent for other data warehouse products).
+
+Additionally, external engines that support the Iceberg open table format can also work directly with data in watsonx.data’s object storage. For example, Db2 and Netezza have been enhanced to read from and write to the Iceberg table format (not all deployment options for Db2 and Netezza currently include this support; as of 3Q 2023 it is limited to Db2 Warehouse Gen3 on AWS and Netezza Performance Server as a Service on AWS). This means that Db2 and Netezza can participate in the watsonx.data ecosystem as well, accessing the lakehouse data in object storage directly (just as Presto and Spark can). This, however, is beyond the scope of this lab.
+In the previous section you registered an existing Db2 environment with watsonx.data (calling it Db2DW) and created a catalog for it called db2catalog.
+In this example scenario, you’re going to “move” the gosalesdw.sls_sales_fact table from Db2 to watsonx.data’s object storage. It will be created as an Iceberg table, in a new schema you create called wxgosalesdw, managed by the iceberg_data catalog.
+
+To create a new table with the same table definition as the original table, you can use the CREATE TABLE AS SELECT (CTAS) SQL statement.
+
+1. Copy the below SQL to SQL editor and replace "my_schema" to your schema like "dhuszti"
  
 ```
 create table iceberg_data.**my_schema**.emp_employee_dim as
@@ -153,7 +169,7 @@ select
 from
   db2_catalog.gosalesdw.emp_employee_dim;
 ```
-3. Run query
+2. Run query
 
 ##  Timetravel query
 1. If not yet created then please create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
