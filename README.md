@@ -23,7 +23,10 @@ Please download cars.csv from prerequsites folder or from https://ibm.box.com/v/
 5. Let us add a new bucket by clicking to top right corner
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/6fde9e54-aad1-401a-a6b7-9f81dd6f2a18)
 
-6. Click on bucket <br>
+6. Click on bucket
+<p align="center">
+  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)">
+</p>
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)
 
 7. Fill values accordingly:
