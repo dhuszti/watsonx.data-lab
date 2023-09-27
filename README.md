@@ -1,7 +1,7 @@
 # watsonx.data-lab
 
 ## Download prerequisite files
-Please download cars.csv from prerequsites folder. 
+Please download cars.csv from prerequsites folder or from https://ibm.box.com/v/data-cars-csv. 
 
 ## Access the environment (6 people each)
 * team 1: https://na4.techzone-services.com:31554/
@@ -50,8 +50,9 @@ Upload a file and check how it is stored in Iceberg table format
 a.	Go to the top of the left navigation pane and click the Create dropdown menu. Select Create schema. Create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/bfa1611f-b862-4ceb-a867-bb94f44b7e8d)
 In the Create schema pop-up window, select/enter the following information, and then click the Create button.
-• Catalog: iceberg_data
-• Name: **my_schema**
+* Catalog: iceberg_data
+* Name: **my_schema**
+  
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)
 Expand the iceberg_data catalog. The new schema should be listed (but contains no tables).
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d)
@@ -66,12 +67,12 @@ For the Source, click Drag and drop a file or click to upload. Locate the cars.c
 Scroll down to view a sample of the data uploaded. The schema of the table is inferred from the data in the file. Click Next.
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/074ef713-e018-4c5a-8918-ca7fb46a7625)
 For the Target, select/enter the following information (some fields are pre-populated and cannot be changed). Once filled in, click Next.
-• Engine: presto-01
-• Catalog: iceberg_data
-• Schema: **my_schema**
-• Table name: cars
-• Table format: Apache Iceberg
-• Data format: Parquet
+* Engine: presto-01
+* Catalog: iceberg_data
+* Schema: **my_schema**
+* Table name: cars
+* Table format: Apache Iceberg
+* Data format: Parquet
 
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/7c9607fa-f2de-4da6-ab1d-ac24d35c1c80)
 
