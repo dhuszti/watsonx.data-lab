@@ -240,10 +240,15 @@ You are now going to roll the table back to the first snapshot, representing the
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/654f70fd-8456-4854-8248-61be40bd7cd5)
 
 8. In the Confirm rollback pop-up window, click Rollback.
+<p align="center">
+  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e1fdce27-00b9-4795-81e3-41100b28ea9c)">
+</p>
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e1fdce27-00b9-4795-81e3-41100b28ea9c)
 
 Note: For reference, the following SQL statement will perform the equivalent roll back operation (DO NOT RUN THIS NOW):
-```call iceberg_data.system.rollback_to_snapshot ('my_schema', 'airport_id', <snapshotID>);```
+```
+call iceberg_data.system.rollback_to_snapshot ('my_schema', 'airport_id', <snapshotID>);
+```
 
 9. Copy and paste the following SQL statement
 ```
