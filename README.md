@@ -12,31 +12,40 @@ team 5:
 
 ## Infrastructure overview of Watsonx.data
 1. Go to top left corner click on four lines
-2. Select Infrastructure Manager
-3. The Infrastructure manager page opens with a graphical canvas view of the different infrastructure components currently defined in this watsonx.data environment: Engines (blue layer), Catalogs (purple layer), Buckets (green layer), and Databases (also blue, but not shown).
+   
+3. Select Infrastructure Manager
+   
+4. The Infrastructure manager page opens with a graphical canvas view of the different infrastructure components currently defined in this watsonx.data environment: Engines (blue layer), Catalogs (purple layer), Buckets (green layer), and Databases (also blue, but not shown).
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e20d294f-1086-4a8e-998e-65768de68d21)
+
 Each bucket is associated with a catalog (with a 1:1 mapping). When a bucket is added to watsonx.data, a catalog is created for it at the same time, based on input from the user. Likewise, if a database connection is added (for federation purposes), a catalog is created for that database connection as well. Both of these activities will be shown later in the lab. Each catalog is then associated with one or more engines. An engine can’t access data in a bucket or a remote database unless the corresponding catalog is associated with the engine.
 
-4. Let us add a new bucket by clicking to top right corner
+6. Let us add a new bucket by clicking to top right corner
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/6fde9e54-aad1-401a-a6b7-9f81dd6f2a18)
-6. Click on bucket
+
+7. Click on bucket
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)
-7. Fill values accordingly:
+
+8. Fill values accordingly:
 Bucketname: cos-watsonx-data-user1 or cos-watsonx-data-user2 or cos-watsonx-data-user3 or cos-watsonx-data-user4 or cos-watsonx-data-user5 or cos-watsonx-data-user6 (please select the one respective to your previosly selected username)
-Url: https://s3.eu-de.cloud-object-storage.appdomain.cloud
-Access key: 7830f4f34e514848ad3141e196ce4e79
-Secret key: 6984cfb2ac8164dd1f290f32e525986b35776ff67566c9de
-Catalog type: Apache Iceberg
-Catalog name: iceberg_**your_name** (for instance iceberg_dhuszti)
-Active: Maybe later
+- Url: https://s3.eu-de.cloud-object-storage.appdomain.cloud
+- Access key: 7830f4f34e514848ad3141e196ce4e79
+- Secret key: 6984cfb2ac8164dd1f290f32e525986b35776ff67566c9de
+- Catalog type: Apache Iceberg
+- Catalog name: iceberg_**your_name** (for instance iceberg_dhuszti)
+- Active: Maybe later
+  
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/26733521-6a42-4d7b-8333-1e6407510a46)
 
 8. Click on Add button
+   
 9. Now you need to associate your iceberg_**your_name** catalog to Presto engine. Move your cursor to your catalog and click on Manage Associations
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d0878d9d-2024-40ee-a7e2-1e927cc2aaad)
+
 10. Select Presto and click Restart engine
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/40d66d25-8ffb-4107-89ab-d8dba479049b)
-11. You should be able to see that your iceberg_**your_name** catalog is now connected to engine. You can start using it.  
+
+12. You should be able to see that your iceberg_**your_name** catalog is now connected to engine. You can start using it.  
 
 ## Upload file via GUI
 Upload a file and check how it is stored in Iceberg table format
