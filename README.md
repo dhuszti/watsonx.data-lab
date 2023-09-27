@@ -25,9 +25,8 @@ Please download cars.csv from prerequsites folder or from https://ibm.box.com/v/
 
 6. Click on bucket
 <p align="center">
-  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b">
 </p>
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/06eea249-2c1f-4c54-9316-212eee70af4b)
 
 7. Fill values accordingly:
 * Bucketname: cos-watsonx-data-user1 or cos-watsonx-data-user2 or cos-watsonx-data-user3 or cos-watsonx-data-user4 or cos-watsonx-data-user5 or cos-watsonx-data-user6 (please select the one respective to your previosly selected username)
@@ -51,25 +50,27 @@ Please download cars.csv from prerequsites folder or from https://ibm.box.com/v/
 ## Upload file via GUI
 Upload a file and check how it is stored in Iceberg table format
 a.	Go to the top of the left navigation pane and click the Create dropdown menu. Select Create schema. Create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/bfa1611f-b862-4ceb-a867-bb94f44b7e8d)
+<p align="center">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/bfa1611f-b862-4ceb-a867-bb94f44b7e8d">
+</p>
+
 In the Create schema pop-up window, select/enter the following information, and then click the Create button.
 * Catalog: iceberg_data
 * Name: **my_schema**
+* 
 <p align="center">
-  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8">
 </p>
 
 Expand the iceberg_data catalog. The new schema should be listed (but contains no tables).
 <p align="center">
-  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d)">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d">
 </p>
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d916b032-eaf8-4bd1-b971-5e462906023d)
 
 Click the Create dropdown menu again but this time select Create table from file.
 <p align="center">
-  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/a6d491ee-ccb1-4614-9558-d653befd9f52)">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/a6d491ee-ccb1-4614-9558-d653befd9f52">
 </p>
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/a6d491ee-ccb1-4614-9558-d653befd9f52)
 
 The Create table from file workflow allows you to upload a small (maximum 2 MB file size) .csv, .parquet, .json, or .txt file to define and populate a new table.
 
@@ -77,15 +78,14 @@ Download the sample cars.csv file to your desktop (link to file: https://ibm.box
 
 For the Source, click Drag and drop a file or click to upload. Locate the cars.csv file you downloaded in the previous step and select it for upload (or simply drag and drop the file into this panel).
 <p align="center">
-  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/514d5117-c5da-453c-bb61-b1a8c86ea10f)">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/514d5117-c5da-453c-bb61-b1a8c86ea10f">
 </p>
 
 Scroll down to view a sample of the data uploaded. The schema of the table is inferred from the data in the file. Click Next.
 
 <p align="center">
-  <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/074ef713-e018-4c5a-8918-ca7fb46a7625)">
+  <img src="https://github.com/dhuszti/watsonx.data-lab/assets/11091479/074ef713-e018-4c5a-8918-ca7fb46a7625">
 </p>
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/074ef713-e018-4c5a-8918-ca7fb46a7625)
 
 For the Target, select/enter the following information (some fields are pre-populated and cannot be changed). Once filled in, click Next.
 * Engine: presto-01
@@ -251,7 +251,7 @@ call iceberg_data.system.rollback_to_snapshot ('my_schema', 'airport_id', <snaps
 
 9. Copy and paste the following SQL statement
 ```
-select * from iceberg_data.**my_schema**.airport_id where code = 10000;
+select * from iceberg_data.my_schema.airport_id where code = 10000;
 ```
 ```
 select count(*) from iceberg_data.my_schema.airport_id;
