@@ -10,6 +10,8 @@ Please download cars.csv from prerequsites folder or from https://ibm.box.com/v/
 * team 4: https://na4.techzone-services.com:26615/
 * team 5: https://na4.techzone-services.com:30707/
 
+Username and password are going to be shared on enablement.
+
 ## Infrastructure overview of Watsonx.data
 1. Go to top left corner click on four lines
    
@@ -34,18 +36,18 @@ Please download cars.csv from prerequsites folder or from https://ibm.box.com/v/
 * Access key: 7830f4f34e514848ad3141e196ce4e79
 * Secret key: 6984cfb2ac8164dd1f290f32e525986b35776ff67566c9de
 * Catalog type: Apache Iceberg
-* Catalog name: iceberg_**your_name** (for instance iceberg_dhuszti)
+* Catalog name: iceberg_your_name (for instance iceberg_dhuszti)
 * Active: Activate it now
 
 8. Click on Add button
    
-9. Now you need to associate your iceberg_**your_name** catalog to Presto engine. Move your cursor to your catalog and click on Manage Associations
+9. Now you need to associate your **iceberg_your_name** catalog to Presto engine. Move your cursor to your catalog and click on Manage Associations
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/d0878d9d-2024-40ee-a7e2-1e927cc2aaad)
 
 10. Select Presto and click Restart engine
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/40d66d25-8ffb-4107-89ab-d8dba479049b)
 
-12. You should be able to see that your iceberg_**your_name** catalog is now connected to engine. You can start using it.  
+12. You should be able to see that your **iceberg_your_name** catalog is now connected to engine. You can start using it.  
 
 ## Upload file via GUI
 Upload a file and check how it is stored in Iceberg table format
@@ -208,7 +210,7 @@ Iceberg uses snapshots to support this time travel capability. A snapshot repres
 1. If not yet created then please create new „my_schema” under „iceberg_catalog” (please use your name like "dhuszti")
 2. Create a sample table to test time travel query and rollback. Copy the below SQL to SQL editor and replace "my_schema" to your schema like "dhuszti"
 ```
-create table iceberg_data.**my_schema**.airport_id as select * from hive_data.ontime.airport_id;
+create table iceberg_data.my_schema.airport_id as select * from hive_data.ontime.airport_id;
 ```
 As shown in the output above after running the query, there are 6,250 rows in this table.
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/e6b3a2e1-d33b-4d8f-b7b0-e7356e3d22f2)
@@ -219,10 +221,10 @@ As shown in the output above after running the query, there are 6,250 rows in th
 
 4. Copy and paste the following SQL statements to insert data, check whether data is inserted and validate you have 6251 rows.
 ```
-insert into iceberg_data.**my_schema**.airport_id values (10000, 'North Pole: Reindeer Field');
+insert into iceberg_data.my_schema.airport_id values (10000, 'North Pole: Reindeer Field');
 ```
 ```
-select * from iceberg_data.**my_schema**.airport_id where code = 10000;
+select * from iceberg_data.my_schema.airport_id where code = 10000;
 ```
 ```
 select count(*) from iceberg_data.my_schema.airport_id;
