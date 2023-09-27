@@ -58,7 +58,6 @@ In the Create schema pop-up window, select/enter the following information, and 
 <p align="center">
   <img src="[./my.gif](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)">
 </p>
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/c65f032c-f51c-4d3e-b6e0-fad17430c0c8)
 
 Expand the iceberg_data catalog. The new schema should be listed (but contains no tables).
 <p align="center">
