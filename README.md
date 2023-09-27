@@ -33,9 +33,7 @@ Each bucket is associated with a catalog (with a 1:1 mapping). When a bucket is 
 • Secret key: 6984cfb2ac8164dd1f290f32e525986b35776ff67566c9de
 • Catalog type: Apache Iceberg
 • Catalog name: iceberg_**your_name** (for instance iceberg_dhuszti)
-• Active: Maybe later
-  
-![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/26733521-6a42-4d7b-8333-1e6407510a46)
+• Active: Activate it now
 
 8. Click on Add button
    
