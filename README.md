@@ -102,7 +102,7 @@ Scroll down to review the Summary, which includes the Data Definition Language (
 Navigate to your new table: iceberg_data > my_schema > cars.
 ![image](https://github.com/dhuszti/watsonx.data-lab/assets/11091479/09a040c1-a2d5-4eed-9ab6-a19d2e86cb0b)
 
-###Query Workspace Page
+### Query Workspace Page
 Databases and query engines such as Presto have multiple ways that users can interact with the data. For example, there is usually an interactive command line interface (CLI) that lets users run SQL statements from a command terminal. Also, remote applications can use JDBC (Java Database Connectivity) to connect to the data store and run SQL statements.
 The watsonx.data user interface includes an SQL interface for building and running SQL statements. This is called the Query workspace. Users can write or copy in their own SQL statements, or they can use templates to assist in building new SQL statements.
 
@@ -257,35 +257,36 @@ select * from iceberg_data.my_schema.airport_id where code = 10000;
 select count(*) from iceberg_data.my_schema.airport_id;
 ```
 
-##  Optimize performance - use partitioning
-
+##  Optimize performance (OPTIONAL)
+1. Create a sample table to test time travel query and rollback. Copy the below SQL to SQL editor and replace "my_schema" to your schema like "dhuszti"
+```
 create table iceberg_data.my_schema.customer as select * from tpch.tiny.customer;
+```
 
--- Run a simple scan query which selects customer names and market segment.
-select name, mktsegment from iceberg_data.workshop.customer limit 3;
+2. Run a simple scan query which selects customer names and market segment.
+```
+select name, mktsegment from iceberg_data.my_schema.customer limit 3;
+```
 
--- Run this EXPLAIN or show via Explain button
-explain select name, mktsegment from iceberg_data.workshop.customer;
-
--- Create partitioned table (afterwards show the MinIO)
-create table iceberg_data.workshop.part_customer 
+3. Create partitioned table and migrate data to this table (partitioned based on mktsegment values)
+```
+create table iceberg_data.my_schema.part_customer 
   with (partitioning = array['mktsegment']) 
   as select * from tpch.tiny.customer;
+```
 
-select * from iceberg_data."workshop".part_customer where mktsegment='MACHINERY';
+4. Run below select on partitioned table
+```
+select * from iceberg_data.my_schema.part_customer where mktsegment='MACHINERY';
+```
 
-create table iceberg_data.workshop.orders as 
-  select * from tpch.tiny.orders;
-
--- Use a Windowing function  
-SELECT 
-   orderkey, clerk, totalprice, 
-   rank() OVER (PARTITION BY clerk ORDER BY totalprice DESC) AS rnk 
-FROM 
-   iceberg_data.workshop.orders 
-ORDER BY 
-   clerk, rnk;  
-   
+5. Run queries for both partitioned and unpartitioned table (you won't see a big difference in execution speed as data volume is really small)
+```   
 select * from iceberg_data.workshop.customer where mktsegment='FURNITURE';
-
+```
+```
 select * from iceberg_data.workshop.part_customer where mktsegment='FURNITURE';
+```
+
+##  Summary
+Congratulations on completing this lab! As a result, you should feel much more confident in your ability to demonstrate these capabilities to your clients, as well as be able to discuss the business value of watsonx.data with them.
