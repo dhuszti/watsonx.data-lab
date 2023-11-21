@@ -4,11 +4,8 @@
 Please download cars.csv from prerequsites folder or from https://ibm.box.com/v/data-cars-csv. 
 
 ## Access the environment (6 people each)
-* team 1: https://na4.techzone-services.com:31554/
-* team 2: https://na4.techzone-services.com:40236/
-* team 3: https://na4.techzone-services.com:44077/
-* team 4: https://na4.techzone-services.com:26615/
-* team 5: https://na4.techzone-services.com:30707/
+* team 1: https://eu-de.techzone-services.com:32327/
+* team 2: https://eu-de.techzone-services.com:49105/
 
 Username and password are going to be shared on enablement.
 
